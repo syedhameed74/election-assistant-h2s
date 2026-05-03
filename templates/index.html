@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicGuide AI | Premium Election Knowledge Portal</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Using professional Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- The perspective hub for all 3D transitions -->
+    <div class="app-perspective-hub">
+        <div class="main-portal-card">
+            
+            <header class="portal-header elevated-0">
+                <div class="brand">
+                    <span class="icon">🗳️</span>
+                    <span class="logo-text">CivicGuide <span class="badge">AI PRO</span></span>
+                </div>
+                <p class="subtitle">Interactive Election & Civic Education Portal</p>
+            </header>
+
+            <main id="chat-box" class="portal-main-area chat-container">
+                <!-- Pro intro card -->
+                <div class="message ai-message message-card-enter">
+                    <div class="message-content elevated-2">
+                        <p class="greeting">Welcome to the CivicGuide Portal.</p>
+                        <p>Our platform uses advanced logic and direct integration with Google services to clarify electoral processes, timelines, and voting steps. We focus on non-partisan education.</p>
+                        <p>How can we assist your civic journey today?</p>
+                    </div>
+                </div>
+            </main>
+
+            <!-- NEW: Suggested Topics Chips (Crucial Material Design feature) -->
+            <section id="suggestions-area" class="suggestions-chips-section">
+                <!-- These will be populated professionally by JavaScript -->
+            </section>
+
+            <footer class="portal-footer elevated-1">
+                <div class="input-card integrated">
+                    <input type="text" id="user-input" placeholder="Enter your civic question or use suggestions..." autocomplete="off">
+                    <button id="send-btn" class="send-action elevated-1" title="Send Question">
+                        <!-- Cleaner Material Design inspired send icon (SVG) -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    </button>
+                </div>
+            </footer>
+
+        </div> <!-- /main-portal-card -->
+    </div> <!-- /app-perspective-hub -->
+    
+    <script src="/static/script.js"></script>
+</body>
+</html>

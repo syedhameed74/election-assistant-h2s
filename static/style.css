@@ -1,0 +1,282 @@
+/* ==========================================
+   1. Pro Material Palette & System Tokens
+   ========================================== */
+:root {
+    /* Rich Dark Canvas */
+    --bg-dark-rich: #111417; /* Replaces simple dark blue */
+    --surface-portal: #1A1D21; /* Dark Slate Surface for portal card */
+    --surface-elevated: #24282D; /* Surface elevated 1dp */
+    
+    /* Primary Accent Container (Google Blue inspire) */
+    --color-primary: #3B82F6;
+    --primary-accent-surface: #20262E; /* Primary container (ai messages) */
+    --primary-accent-surface-border: rgba(59, 130, 246, 0.2);
+    
+    /* Secondary Accent Container (Neutral user) */
+    --secondary-accent-surface: #2A2E33; /* user messages container */
+    --secondary-accent-surface-border: rgba(255, 255, 255, 0.05);
+
+    /* Text System */
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --text-accent: #60A5FA;
+
+    /* Shadow Elevation Tokens (Material Design system) */
+    --shadow-elevation-0dp: 0 0 0 0 rgba(0,0,0,0);
+    --shadow-elevation-1dp: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
+    --shadow-elevation-2dp: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-elevation-4dp: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-elevation-primary-glow: 0 0 15px rgba(59, 130, 246, 0.3);
+
+    /* Transitions & Perspective */
+    --transition-standard: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --perspective-depth: 1000px;
+    --translate-z-base: -100px; /* Hidden start position */
+}
+
+/* ==========================================
+   2. Reset & Typography Standard
+   ========================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark-rich);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 1rem;
+}
+
+/* Helper for visual depth */
+.elevated-0 { box-shadow: var(--shadow-elevation-0dp); }
+.elevated-1 { box-shadow: var(--shadow-elevation-1dp); }
+.elevated-2 { box-shadow: var(--shadow-elevation-2dp); }
+.elevated-4 { box-shadow: var(--shadow-elevation-4dp); }
+
+/* ==========================================
+   3. Main Portal Architecture (3D Perspective Hub)
+   ========================================== */
+.app-perspective-hub {
+    perspective: var(--perspective-depth);
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-portal-card {
+    background-color: var(--surface-portal);
+    width: 100%;
+    height: 90vh;
+    border-radius: 28px; /* Classic Material rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Subtle perspective effect applied locally */
+    transform-style: preserve-3d;
+    box-shadow: var(--shadow-elevation-4dp);
+}
+
+/* Portal Header: Card Elevation Level 1 */
+.portal-header {
+    background-color: var(--surface-elevated);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand { display: flex; align-items: center; gap: 0.75rem; font-size: 1.5rem; font-weight: 600; }
+.logo-text .badge { font-size: 0.65rem; color: var(--color-primary); background: rgba(59, 130, 246, 0.1); padding: 2px 6px; border-radius: 6px; vertical-align: top; }
+.subtitle { font-size: 0.9rem; color: var(--text-secondary); margin-top: 4px; }
+
+/* Main Chat Area: Recessed Elevation */
+.portal-main-area {
+    flex-grow: 1;
+    background-color: rgba(0,0,0,0.2); /* Integrated background */
+    padding: 2rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    scroll-behavior: smooth;
+    /* Maintain 3D perspective hub context */
+    transform-style: preserve-3d;
+}
+
+/* ==========================================
+   4. Sophisticated 3D Card Messages
+   ========================================== */
+.message {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    perspective: var(--perspective-depth);
+    transform-origin: center center;
+    opacity: 0;
+}
+
+/* Pro elevation 3D Entry transition (subtle scale and flipZ) */
+.message-card-enter {
+    animation: elevateIn3D 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+}
+
+@keyframes elevateIn3D {
+    0% { transform: scale(0.9) translateZ(var(--translate-z-base)); opacity: 0; }
+    100% { transform: scale(1) translateZ(0); opacity: 1; }
+}
+
+.message-content {
+    padding: 1.25rem 1.75rem;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    transition: var(--transition-standard);
+    /* Basic 3D perspective depth */
+    transform: translateZ(5px);
+}
+
+/* AI Message: Elevated Surface Container Primary Accent */
+.ai-message { align-self: flex-start; }
+.ai-message .message-content {
+    background-color: var(--primary-accent-surface);
+    border: 1px solid var(--primary-accent-surface-border);
+    color: var(--text-primary);
+    border-top-left-radius: 4px;
+}
+/* Focus glow effect on last ai message */
+.ai-message:last-child .message-content { box-shadow: var(--shadow-elevation- primary-glow), var(--shadow-elevation-2dp); }
+
+/* Human (User) Message: Recessed Surface Container Secondary Accent */
+.user-message { align-self: flex-end; }
+.user-message .message-content {
+    background-color: var(--secondary-accent-surface);
+    border: 1px solid var(--secondary-accent-surface-border);
+    color: var(--text-primary);
+    border-top-right-radius: 4px;
+    transform: translateZ(2px); /* Subtly closer than background but recessed vs AI */
+}
+
+/* Intro card styling */
+.ai-message .greeting { color: var(--text-accent); font-weight: 600; font-size: 1.1rem; margin-bottom: 8px; }
+.ai-message .message-content p { margin-bottom: 8px; }
+.ai-message .message-content p:last-child { margin-bottom: 0; }
+
+/* ==========================================
+   5. Suggested Topics Chips (NEW - Material PRO Feature)
+   ========================================= */
+.suggestions-chips-section {
+    padding: 1rem 2rem;
+    background-color: var(--surface-portal);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    justify-content: center;
+}
+
+/* Stylized Material Chips with subtle 3D hover */
+.suggestion-chip {
+    background-color: var(--surface-elevated);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-standard);
+    /* perspective local hub */
+    perspective: var(--perspective-depth);
+    transform-origin: center center;
+}
+
+/* Clean elevate hover effect with subtle rotation */
+.suggestion-chip:hover {
+    background-color: var(--bg-dark-rich);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    transform: translateY(-3px) translateZ(8px);
+    box-shadow: var(--shadow-elevation-2dp);
+}
+.suggestion-chip:active { transform: translateY(-1px); }
+
+/* ==========================================
+   6. Integrated Footer: Input Card & Actions
+   ========================================== */
+.portal-footer {
+    padding: 1.5rem 2rem;
+    background-color: var(--surface-elevated);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.input-card {
+    display: flex;
+    background-color: #0c0f12; /* Deep background recessed surface */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 8px 12px;
+    gap: 12px;
+    transition: var(--transition-standard);
+    perspective: var(--perspective-depth);
+}
+
+/* Deep focus integrated logic */
+.input-card:focus-within {
+    background-color: black;
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-elevation-primary-glow), var(--shadow-elevation-1dp);
+}
+
+input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    padding: 12px;
+    font-size: 1rem;
+    outline: none;
+    font-weight: 400;
+}
+input::placeholder { color: var(--text-secondary); opacity: 0.7; }
+
+/* Material styled Send Button */
+.send-action {
+    background-color: var(--color-primary);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition-standard);
+    perspective: var(--perspective-depth);
+}
+
+.send-action:hover {
+    background-color: #2563EB; /* Darker primary container blue */
+    transform: translateY(-2px) translateZ(10px);
+    box-shadow: var(--shadow-elevation-2dp);
+}
+.send-action:active { transform: translateY(0) scale(0.98); }
+
+/* Styling for generic backend error */
+.backend-error .message-content {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #F87171;
+}
+
+/* Typing Indicator (updated) */
+.typing-indicator { display: flex; gap: 5px; padding: 10px 14px; }
+.dot { width: 6px; height: 6px; background: var(--text-secondary); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
